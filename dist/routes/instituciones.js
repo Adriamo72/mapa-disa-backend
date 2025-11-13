@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const institucionesController_1 = require("../controllers/institucionesController");
+const router = (0, express_1.Router)();
+router.get('/', institucionesController_1.obtenerInstituciones);
+router.post('/', institucionesController_1.crearInstitucion);
+router.put('/:id', institucionesController_1.actualizarInstitucion);
+router.delete('/:id', institucionesController_1.eliminarInstitucion);
+exports.default = router;

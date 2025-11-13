@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const recursoHumanoController_1 = require("../controllers/recursoHumanoController");
+const router = (0, express_1.Router)();
+router.get('/', recursoHumanoController_1.obtenerRecursosHumanos);
+router.post('/', recursoHumanoController_1.crearRecursoHumano);
+router.put('/:id', recursoHumanoController_1.actualizarRecursoHumano);
+router.delete('/:id', recursoHumanoController_1.eliminarRecursoHumano);
+exports.default = router;

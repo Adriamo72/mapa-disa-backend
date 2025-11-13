@@ -61,8 +61,7 @@ app.use((error: any, req: express.Request, res: express.Response, next: express.
 
 app.listen(PORT, () => {
   console.log(` Servidor corriendo en puerto ${PORT}`);
-  console.log(` Health check: http://localhost:${PORT}/api/health`);
-  console.log(` Instituciones: http://localhost:${PORT}/api/instituciones`);
+  console.log(` Health check disponible en el puerto ${PORT}`);
 });
 
 testConnection().then(success => {

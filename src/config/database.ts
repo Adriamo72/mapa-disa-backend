@@ -3,19 +3,20 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+// Configuración para desarrollo local conectando a Render
 export const pool = new Pool({
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
   database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
   port: parseInt(process.env.DB_PORT || '5432'),
-  // Configuraciones específicas para Render
+  // SSL es REQUERIDO para Render PostgreSQL incluso en desarrollo
   ssl: {
-    rejectUnauthorized: false // Necesario para Render
+    rejectUnauthorized: false
   },
-  max: 10,
+  max: 5, // Reduce el máximo para desarrollo
   idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 10000, // Aumentar timeout
+  connectionTimeoutMillis: 15000, // Aumenta timeout
 });
 
 // Función query helper
@@ -36,12 +37,16 @@ pool.on('error', (err) => {
 export const testConnection = async () => {
   try {
     const client = await pool.connect();
+    console.log('✅ Cliente de PostgreSQL conectado');
     const result = await client.query('SELECT NOW()');
-    console.log('✅ Conexión a Render PostgreSQL exitosa:', result.rows[0].now);
+    console.log('✅ Conexión a PostgreSQL exitosa:', result.rows[0].now);
     client.release();
     return true;
   } catch (error: any) {
-    console.error('❌ Error conectando a Render PostgreSQL:', error.message);
+    console.error('❌ Error detallado conectando a PostgreSQL:');
+    console.error('  - Mensaje:', error.message);
+    console.error('  - Código:', error.code);
+    console.error('  - Detalle:', error.detail);
     return false;
   }
 };

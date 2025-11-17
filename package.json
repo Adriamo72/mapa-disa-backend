@@ -8,7 +8,7 @@
     "start": "node dist/app.js",
     "dev": "ts-node app.ts",
     "prebuild": "npm run clean",
-    "clean": "if exist dist rmdir /s /q dist"
+    "clean": "rm -rf dist || echo 'No dist folder to clean'"
   },
   "dependencies": {
     "express": "^4.18.2",
